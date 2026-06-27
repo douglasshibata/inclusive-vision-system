@@ -41,6 +41,8 @@ To empower blind and low-vision individuals by providing a seamless, intelligent
 
 ## 4. Technical Architecture
 
+For a detailed breakdown of services, data flows, and API definitions, see the [Architecture Documentation](docs/ARCHITECTURE.md).
+
 ### Recommended Platforms
 *   **Mobile App (iOS/Android):** Primary interface for on-the-go navigation and environment sensing.
 *   **Web Application:** Optimized for desktop-class document processing and educational tasks.

@@ -27,7 +27,10 @@ A comprehensive, AI-powered inclusive system designed to empower blind and low-v
     ```
 
 3.  **Documentation:**
-    Read the full [Project Proposal](PROPOSAL.md) for a detailed breakdown of the system's vision and architecture.
+    *   [Project Proposal](PROPOSAL.md) - Vision, Goals, and Core Features.
+    *   [Architecture Overview](docs/ARCHITECTURE.md) - Technical services and data flows.
+    *   [Agent Instructions](AGENTS.md) - Guidelines for AI collaborators.
+    *   [Claude Guide](CLAUDE.md) - Development commands and workflows.
 
 ## 📖 How to Use
 
