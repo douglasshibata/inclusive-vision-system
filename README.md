@@ -1,60 +1,37 @@
 # Inclusive Vision System (IVS)
 
-A comprehensive, AI-powered inclusive system designed to empower blind and low-vision users through advanced assistive technologies.
+IVS is an AI-powered inclusive system designed to empower blind and low-vision users through advanced assistive technologies.
 
-## 🛠 Technical Stack & Versions
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Security](#security)
 
-| Layer | Technology | Version |
-|-------|------------|---------|
-| Frontend (Mobile) | Flutter / Dart | 3.29.0 / 3.7.0 |
-| Frontend (Web) | Angular | 19.1.0 |
-| AI Engine | Python / PyTorch | 3.12 / 2.6.0 |
-| Backend | Go | 1.24.3 |
-| Accessibility APIs | VoiceOver, TalkBack, NVDA | Latest |
+## Overview
+A comprehensive ecosystem providing real-time navigation, object recognition, and cognitive assistance via wearable and mobile interfaces.
 
-## 🚀 Local Setup
+## Architecture
+- **Navigation Service (Go)**: Low-latency spatial mapping.
+- **Cognitive Engine (Python)**: High-level scene description using multimodal LLMs.
+- **Client Layers**: Flutter (Mobile) and Angular (Web Dashboard).
 
-1.  **Clone the monorepo:**
-    ```bash
-    git clone <repository-url>
-    cd inclusive-vision-system
-    ```
+## Tech Stack
+- **Languages**: Go 1.24.3, Python 3.12, Dart/Flutter, TypeScript/Angular.
+- **AI Models**: YOLOv11, CLIP, Gemini 1.5 Flash.
+- **Backend**: Microservices with gRPC and WebSockets.
 
-2.  **Environment Configuration:**
-    Copy `.env.example` to `.env` and configure your API keys for AI services (Gemini, Claude, or OpenAI).
-    ```bash
-    cp .env.example .env
-    ```
+## Installation
+Refer to individual service directories:
+- `backend/`: Go implementation.
+- `ai-engine/`: Python FastAPI.
+- `frontend-web/`: Angular dashboard.
 
-3.  **Documentation:**
-    *   [Project Proposal](PROPOSAL.md) - Vision, Goals, and Core Features.
-    *   [Architecture Overview](docs/ARCHITECTURE.md) - Technical services and data flows.
-    *   [Agent Instructions](AGENTS.md) - Guidelines for AI collaborators.
-    *   [Claude Guide](CLAUDE.md) - Development commands and workflows.
+## Security
+- **Privacy First**: Localized processing for voice and location data where possible.
+- **Authentication**: Centralized OAuth2/OIDC via the Go Gateway.
+- **Compliance**: Adherence to WCAG 2.2 AAA standards.
 
-## 📖 How to Use
-
-*   **As a Developer:** Explore the `api/` directory for integration guidelines.
-*   **As a Designer:** Review `docs/DESIGN.md` for accessibility-first UI patterns and WCAG compliance checklists.
-*   **As a User:** Access the [User Guide](docs/USER_GUIDE.md) (provided in accessible formats).
-
-## 🚢 How to Deploy
-
-The IVS is containerized using multi-stage Docker builds.
-```bash
-docker compose up --build
-```
-
-## ⚙️ Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `AI_PROVIDER` | AI service to use (openai, gemini, claude) | `gemini` |
-| `API_KEY` | Secret key for the chosen AI provider | `None` |
-| `OFFLINE_MODE` | Enable/disable offline cognitive processing | `true` |
-
-## 🛠 Development Guidelines
-
-1.  **Accessibility First:** Every component must have proper ARIA labels and keyboard support.
-2.  **Test with Assistive Tech:** All UI changes must be verified using at least one screen reader (VoiceOver, TalkBack, or NVDA).
-3.  **Performance:** Keep latency for TTS and Braille output under 100ms.
+## License
+Open Source / Accessibility First
