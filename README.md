@@ -35,3 +35,34 @@ Refer to individual service directories:
 
 ## License
 Open Source / Accessibility First
+
+---
+
+## 🛠️ Project Deep Dive & Technical Guide
+
+### 🎯 Main Purpose
+Assistive Vision Technologies leveraging real-time computer vision and Web/Mobile accessibility.
+
+### 🧰 Tecnologias Utilizadas (Tech Stack)
+- **Primary Technologies:** Angular 19.2.2, FastAPI, Flutter 3.41.x, Go 1.24.3, Node.js / npm, Python 3.12
+- **Deployment Strategy:** Container-ready with standard Docker/Docker Compose integrations where applicable.
+
+### 🚀 Como Implantar e Executar (How to Deploy & Run)
+#### Frontend (Angular / Node.js)
+1. Navigate to the frontend directory.
+2. Install dependencies: `npm install`.
+3. Run development server: `npm start` or `npm run dev`.
+
+#### Python Engine / FastAPI
+1. Install dependencies: `pip install -r requirements.txt`.
+2. Run the server/script: `uvicorn main:app --reload` or `python main.py`.
+
+#### Go CLI / Service
+1. Build the module: `go build`.
+2. Execute: `./inclusive-vision-system` (or project executable name).
+
+#### Flutter PWA / Mobile
+1. Fetch dependencies: `flutter pub get`.
+2. Run: `flutter run`.
+
+---
