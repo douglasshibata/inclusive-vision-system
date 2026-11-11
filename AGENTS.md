@@ -5,36 +5,25 @@ Welcome, Agent. Your goal is to help build and maintain the IVS, an accessibilit
 ## 🧠 Core Principles
 
 1.  **Accessibility is Functional:** Accessibility is not a "UI feature"—it is the core functionality. If a feature is not accessible, it is broken.
-2.  **Semantic Truth:** Always prioritize semantic HTML and proper ARIA roles. Never use `div` or `span` for interactive elements when a `button` or `a` is appropriate.
-3.  **Low Latency:** Every millisecond counts for users relying on audio feedback. Optimize algorithms and network calls for speed.
-4.  **Privacy First:** Users trust this system with their location and voice. Ensure all data handling follows strict privacy protocols.
+2.  **Semantic Truth:** Always prioritize semantic HTML and proper ARIA roles in web, and `Semantics(label: "...", hint: "...")` in Flutter.
+3.  **Low Latency & Edge First:**
+    - Level 0 (Safety Loop): <30ms on device (LiDAR, ToF, INT8).
+    - Level 1 (Gateway): <100ms spatial routing in Go.
+    - Level 2 (Cognitive Context): Multimodal VLM in Python.
+4.  **Privacy First:** Ephemeral frame buffering in RAM, on-device face blurring, and strict LGPD/GDPR compliance.
 
-## 🛠 Project Structure
+## 🛠 Canonical Project Structure
 
-- `backend/`: Go-based API and microservices.
-- `ai-engine/`: Python-based cognitive and vision models.
-- `frontend-web/`: Angular application for management and high-precision reading.
-- `mobile/`: Flutter application for navigation and sensing.
-- `docs/`: Technical documentation and design specifications.
-
-## 📝 Coding Standards
-
-### Frontend (Angular/Flutter)
-- Every image **MUST** have an `alt` tag or a `Semantics` label.
-- Focus management must be explicit. After a modal opens or a screen changes, focus must be programmatically moved to the most logical starting point.
-- Ensure 4.5:1 minimum contrast ratio for all text elements.
-
-### Backend (Go/Python)
-- All cognitive outputs must include a `confidence_score`.
-- Large payloads (images/PDFs) must be handled via streams to minimize memory pressure.
-- Implement robust health checks for AI model availability.
+- `proto/`: Protobuf schemas (`proto/vision/v1/spatial_stream.proto`).
+- `services/gateway/`: Go 1.24+ gRPC & streaming gateway (`cmd/server`, `internal/auth`, `session`, `telemetry`).
+- `services/ai-engine/`: Python 3.12 cognitive and vision models (FastAPI, VLM, YOLO).
+- `clients/mobile/`: Flutter client (`lib/core/haptics/`, `lib/core/audio/`, `lib/features/safety/`).
+- `clients/web-dashboard/`: Angular 19 portal for caregivers & managers.
+- `deploy/`: Docker Compose and Kubernetes manifests (`deploy/k8s/`).
 
 ## 🧪 Testing Requirements
 
-- **Unit Tests:** Mandatory for all logic.
-- **Accessibility Audit:** Use automated tools (Axe, Lighthouse) in every build.
-- **Screen Reader Verification:** When updating the UI, provide a transcript of how a screen reader (VoiceOver/TalkBack) would read the changed section.
-
-## 🚩 Escalation
-
-If you encounter a design pattern that seems inaccessible (e.g., relying purely on color or complex mouse gestures), flag it immediately for human review.
+- **Go Gateway:** `cd services/gateway && go test ./...`
+- **AI Engine:** `cd services/ai-engine && pytest`
+- **Mobile Client:** `cd clients/mobile && flutter test`
+- **Full Monorepo:** `make test`

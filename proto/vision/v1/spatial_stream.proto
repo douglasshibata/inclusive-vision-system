@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package vision.v1;
+
+option go_package = "services/gateway/pkg/api/v1;visionv1";
+
+service SpatialIntelligenceService {
+  // Canal streaming bidirecional de áudio, telemetria e anotações visuais
+  rpc StreamTelemetry(stream ClientPacket) returns (stream SpatialFeedback);
+}
+
+message ClientPacket {
+  string session_id = 1;
+  int64 timestamp_ms = 2;
+
+  oneof payload {
+    FrameChunk frame = 3;       // JPEG/WebP comprimido ou H.265 NAL unit
+    SensorTelemetry sensors = 4; // IMU, Acelerômetro, Orientação
+    UserVoiceIntent intent = 5;  // Áudio da pergunta do usuário ("Onde sentar?")
+  }
+}
+
+message FrameChunk {
+  bytes image_data = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  int32 camera_angle = 4;
+}
+
+message SensorTelemetry {
+  float distance_to_ground_m = 1;
+  float compass_heading = 2;
+  bool is_walking = 3;
+}
+
+message UserVoiceIntent {
+  string query_text = 1;
+  string target_language = 2;
+}
+
+message SpatialFeedback {
+  enum Severity {
+    SEVERITY_UNSPECIFIED = 0;
+    INFO = 1;       // "Você está na Rua 15"
+    GUIDANCE = 2;   // "Vire 10 graus à esquerda para encontrar a porta"
+    CRITICAL = 3;   // "Pare! Degrau descendente a 1 metro"
+  }
+
+  Severity severity = 1;
+  string verbal_message = 2;     // Mensagem para o sintetizador TTS
+  HapticPattern haptic_cue = 3;   // Vibrações padronizadas
+  SpatialCoordinate sound_vector = 4; // Ângulo para espacialização 3D do áudio
+}
+
+message HapticPattern {
+  int32 pulse_count = 1;
+  int32 duration_ms = 2;
+  int32 intensity = 3; // 1-100
+}
+
+message SpatialCoordinate {
+  float azimuth_deg = 1; // -180 a +180 (Esquerda/Direita)
+  float elevation_deg = 2;
+  float distance_m = 3;
+}

@@ -2,29 +2,22 @@
 
 ## 🛠 Useful Commands
 
-### Backend (Go)
-- `go build ./...` - Build all services
-- `go test ./...` - Run all backend tests
+### Monorepo Makefile
+- `make proto` - Generate Protobuf Go stubs
+- `make test` - Run all backend, AI, and mobile tests
+- `make build` - Build all binaries
+- `make docker-up` - Start full containerized stack
 
-### AI Engine (Python)
-- `pip install -r requirements.txt` - Setup environment
-- `pytest` - Run inference tests
+### Service-Specific Commands
+- `cd services/gateway && go test -v ./...`
+- `cd services/ai-engine && pytest -v`
+- `cd clients/mobile && flutter test`
+- `cd clients/web-dashboard && npm run build`
 
-### Frontend (Angular)
-- `npm run build` - Build production artifacts
-- `npm run test` - Run unit tests
+## 📜 Canonical Architecture
 
-### Docker
-- `docker compose up --build` - Start the full local environment
-
-## 📜 Development Workflow
-
-1.  **A11y First:** Before writing code, describe how the feature will be interacted with via keyboard and screen reader.
-2.  **Schema Sync:** If changing the Cognitive API, update `docs/ARCHITECTURE.md` and both Python/Go models.
-3.  **Semantic PRs:** Ensure every PR includes an "Accessibility Impact" section in the description.
-
-## 🔗 Internal Links
-
-- [Project Proposal](PROPOSAL.md)
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Agent Instructions](AGENTS.md)
+- `services/gateway/`: Low-latency Ingress Gateway & Session Manager in Go 1.24+
+- `services/ai-engine/`: Cognitive Vision with Gemini 1.5 Flash in Python 3.12+
+- `clients/mobile/`: Flutter Edge Client with 3D Spatial Audio and Haptic Safety Loop
+- `clients/web-dashboard/`: Angular 19 Web Dashboard
+- `proto/`: Shared bidirectional gRPC contracts

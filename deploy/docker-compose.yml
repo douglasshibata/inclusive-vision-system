@@ -1,0 +1,32 @@
+services:
+  gateway:
+    build:
+      context: ../services/gateway
+      dockerfile: Dockerfile
+    container_name: ivs-gateway
+    ports:
+      - "50051:50051"
+    environment:
+      - PORT=50051
+      - AI_ENGINE_URL=http://ai-engine:8000
+    restart: unless-stopped
+    networks:
+      - ivs-net
+
+  ai-engine:
+    build:
+      context: ../services/ai-engine
+      dockerfile: Dockerfile
+    container_name: ivs-ai-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=mock
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    networks:
+      - ivs-net
+
+networks:
+  ivs-net:
+    driver: bridge

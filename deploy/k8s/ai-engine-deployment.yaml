@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ivs-ai-engine
+  namespace: ivs
+  labels:
+    app: ivs-ai-engine
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ivs-ai-engine
+  template:
+    metadata:
+      labels:
+        app: ivs-ai-engine
+    spec:
+      containers:
+      - name: ai-engine
+        image: ivs/ai-engine:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ivs-secrets
+              key: gemini-api-key
+              optional: true
+        resources:
+          limits:
+            cpu: "2000m"
+            memory: "2Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ivs-ai-engine
+  namespace: ivs
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  selector:
+    app: ivs-ai-engine

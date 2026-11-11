@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ivs-gateway
+  namespace: ivs
+  labels:
+    app: ivs-gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ivs-gateway
+  template:
+    metadata:
+      labels:
+        app: ivs-gateway
+    spec:
+      containers:
+      - name: gateway
+        image: ivs/gateway:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 50051
+          name: grpc
+        env:
+        - name: PORT
+          value: "50051"
+        - name: AI_ENGINE_URL
+          value: "http://ivs-ai-engine:8000"
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ivs-gateway
+  namespace: ivs
+spec:
+  type: ClusterIP
+  ports:
+  - port: 50051
+    targetPort: 50051
+    name: grpc
+  selector:
+    app: ivs-gateway
